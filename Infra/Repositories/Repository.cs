@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Domain.Interfaces;
+using Domain.Models;
 using Infra.Context;
 
 namespace Infra.Repositories
@@ -25,7 +26,7 @@ namespace Infra.Repositories
 
         public virtual TEntity? GetById(int id)
         {
-           var query = _context.Set<TEntity>().Where(e=> e.ID == id);
+            var query = _context.Set<TEntity>().Where(e => e.ID == id);
 
             if (query.Any())
                 return query.FirstOrDefault();
@@ -33,12 +34,13 @@ namespace Infra.Repositories
             return null;
         }
 
-        public virtual void Save(TEntity entity)=>
+        public virtual void Save(TEntity entity) =>
             _context.Set<TEntity>().Add(entity);
-    
 
-        public virtual void Update(TEntity entity)=>
+        public virtual void Update(TEntity entity) =>
             _context.Set<TEntity>().Update(entity);
-        
+
+        public virtual void Delete(TEntity entity) =>
+            _context.Remove(entity);
     }
 }

@@ -12,9 +12,7 @@ namespace Infra.Repositories
             _context = context;
         }
 
-        public async Task Commit()
-        {
-            await _context.SaveChangesAsync();
-        }
+        public void Commit() =>
+            _context.SaveChanges();
     }
 }

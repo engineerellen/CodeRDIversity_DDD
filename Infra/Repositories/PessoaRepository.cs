@@ -18,6 +18,8 @@ namespace Infra.Repositories
 
             return null;
         }
+
+
         public override IEnumerable<Pessoa> GetAll()
         {
             var query = _context.Set<Pessoa>();

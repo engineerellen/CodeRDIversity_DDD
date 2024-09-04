@@ -11,12 +11,12 @@ namespace Domain.Models
         }
 
         [Required(ErrorMessage = "Nome é obrigatório!")]
-        public string Nome { get; private set; } = string.Empty;
+        public string Nome { get;  set; } = string.Empty;
 
 
         [Required(ErrorMessage = "Email é obrigatório!")]
 
-        public string Email { get; private set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
 
     }
 }

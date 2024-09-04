@@ -8,29 +8,26 @@ namespace PessoasAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-      public class PessoasController : ControllerBase
+    public class PessoasController : ControllerBase
     {
         private readonly PessoaService _service;
-        private readonly IRepository<Pessoa> _repository;
 
-        public PessoasController(PessoaService service
-                               , IRepository<Pessoa> repository)
+        public PessoasController(PessoaService service)
         {
             _service = service;
-            _repository = repository;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Pessoa>> Get()
         {
-           var Pessoas = _repository.GetAll();
+            var Pessoas = _service.GetAll();
             return Ok(Pessoas);
         }
 
         [HttpGet("{id}")]
         public ActionResult<Pessoa> Get(int id)
         {
-            var Pessoa = _repository.GetById(id);
+            var Pessoa = _service.GetByID(id);
 
             if (Pessoa is null)
                 return NotFound(new { message = $"Pessoa de {id} não encontrada!" });
@@ -53,14 +50,27 @@ namespace PessoasAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Pessoa pessoa)
+        [HttpPut()]
+        public IActionResult Put([FromBody] Pessoa pessoa)
         {
             try
             {
-                pessoa.ID = id;
-                _service.Save(pessoa);
+                _service.Update(pessoa);
                 return Ok("Atualizado com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{idPessoa}")]
+        public IActionResult Delete(int idPessoa)
+        {
+            try
+            {
+                _service.Delete(idPessoa);
+                return Ok("Excluido com sucesso!");
             }
             catch (Exception ex)
             {
